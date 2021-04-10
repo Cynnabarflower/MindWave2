@@ -1,15 +1,20 @@
 package com.example.myapplication;
 
 
+import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.neurosky.connection.ConnectionStates;
 import com.neurosky.connection.EEGPower;
 import com.neurosky.connection.TgStreamHandler;
 import com.neurosky.connection.TgStreamReader;
 import com.neurosky.connection.DataType.MindDataType;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
@@ -21,15 +26,24 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.app.ActivityCompat;
+
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
+import java.time.LocalDateTime;
+import java.util.Calendar;
 
 import static com.example.myapplication.R.id.editTextNumber;
 
@@ -55,6 +69,8 @@ public class MainActivity extends Activity {
 
     private BluetoothAdapter mBluetoothAdapter;
     Drone drone;
+    PrintWriter writer = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +78,14 @@ public class MainActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         setContentView(R.layout.first_view);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.v(TAG,"Permission is granted");
+            } else {
+//                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, );
+            }
+        }
 
         drone = new Drone();
         initView();
@@ -114,10 +138,12 @@ public class MainActivity extends Activity {
     private LinearLayout wave_layout;
 
     private EditText editTextNumber = null;
+    private Switch mySwitch = null;
 
     private int badPacketCount = 0;
 
     private void initView() {
+        mySwitch = findViewById(R.id.switchSaveData);
         tv_ps = (TextView) findViewById(R.id.tv_ps);
         tv_attention = (TextView) findViewById(R.id.tv_attention);
         tv_meditation = (TextView) findViewById(R.id.tv_meditation);
@@ -139,6 +165,28 @@ public class MainActivity extends Activity {
         wave_layout = (LinearLayout) findViewById(R.id.wave_layout);
 
         editTextNumber = (EditText) findViewById(R.id.editTextNumber);
+
+
+        mySwitch.setOnCheckedChangeListener((compoundButton, b) -> {
+            if (b) {
+                try {
+                    String root = Environment.getExternalStorageDirectory().toString();
+                    File myDir = new File(root + "/project_446");
+                    if (!myDir.exists()) {
+                        myDir.mkdirs();
+                    }
+                    String filename = (Calendar.getInstance().getTime()).toString()+".txt";
+                    writer = new PrintWriter(new File(myDir, filename), "UTF-8");
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+            } else if (writer != null) {
+                writer.close();
+                writer = null;
+            }
+        });
 
         btn_start.setOnClickListener(new OnClickListener() {
 
@@ -229,9 +277,12 @@ public class MainActivity extends Activity {
     }
 
     public void updateWaveView(int data) {
-
+        if (writer != null) {
+            writer.write(""+data);
+        }
         if (waveView != null) {
             int threshold = Integer.parseInt(((EditText) editTextNumber).getText().toString());
+
             waveView.updateData(data, threshold);
         }
     }

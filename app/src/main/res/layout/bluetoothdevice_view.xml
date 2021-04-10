@@ -222,63 +222,65 @@
                  android:textColor="#ffffffff"
                 android:textSize="16dp" />
         </TableRow>
-         <TableRow
-            android:id="@+id/tableRow4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
 
-            <TextView
-                android:id="@+id/tv_lowgamma_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="LGam."
-                android:textColor="#ffffffff"
-                android:textSize="20dp" />
+           <TableRow
+               android:id="@+id/tableRow4"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_lowgamma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ffffffff"
-                android:textSize="20dp" />
-            <TextView
-                android:id="@+id/tv_middlegamma_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MGam."
-                android:textColor="#ffffffff"
-                android:textSize="20dp" />
+               <TextView
+                   android:id="@+id/tv_lowgamma_label"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="LGam."
+                   android:textColor="#ffffffff"
+                   android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tv_middlegamma"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ffffffff"
-                android:textSize="20dp" />
-            
-            <TextView
-                android:id="@+id/tv_badpacket_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="BadPack"
-                android:textColor="#ffffffff"
-                android:textSize="20dp" />
+               <TextView
+                   android:id="@+id/tv_lowgamma"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="00"
+                   android:textAppearance="?android:attr/textAppearanceLarge"
+                   android:textColor="#ffffffff"
+                   android:textSize="20dp" />
 
-            <TextView
-                android:id="@+id/tv_badpacket"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ffffffff"
-                android:textSize="20dp" />
+               <TextView
+                   android:id="@+id/tv_middlegamma_label"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="MGam."
+                   android:textColor="#ffffffff"
+                   android:textSize="20dp" />
 
-            
-        </TableRow>
+               <TextView
+                   android:id="@+id/tv_middlegamma"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="00"
+                   android:textAppearance="?android:attr/textAppearanceLarge"
+                   android:textColor="#ffffffff"
+                   android:textSize="20dp" />
+
+               <TextView
+                   android:id="@+id/tv_badpacket_label"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="BadPack"
+                   android:textColor="#ffffffff"
+                   android:textSize="20dp" />
+
+               <TextView
+                   android:id="@+id/tv_badpacket"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:text="00"
+                   android:textAppearance="?android:attr/textAppearanceLarge"
+                   android:textColor="#ffffffff"
+                   android:textSize="20dp" />
+
+
+           </TableRow>
     </TableLayout>
     
     <!-- drawing with view.  -->
